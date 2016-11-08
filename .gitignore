@@ -96,3 +96,6 @@ ENV/
 *.out
 *.pdf
 *.synctex.gz
+
+# Vim temporary files
+*.swp
