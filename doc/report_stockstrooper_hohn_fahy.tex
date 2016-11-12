@@ -70,15 +70,15 @@
     breaklines=true,                 % sets automatic line breaking
     captionpos=b,                    % sets the caption-position to bottom
     commentstyle=\color{mygreen},    % comment style
-    deletekeywords={...},            % if you want to delete keywords from the given language
-    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    deletekeywords={}            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*},          % if you want to add LaTeX within your code
     extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
     frame=single,                    % adds a frame around the code
     frameround=tttt                  % tttt for having the corner round.
     keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
     keywordstyle=\color{blue},       % keyword style
     language=html,                 % the language of the code
-    morekeywords={*,...},            % if you want to add more keywords to the set
+    morekeywords={*},            % if you want to add more keywords to the set
     numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
     numbersep=5pt,                   % how far the line-numbers are from the code
     numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
@@ -89,8 +89,8 @@
     stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
     stringstyle=\color{mymauve},     % string literal style
     tabsize=2,                       % sets default tabsize to 2 spaces
-    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-}
+    title=\lstname}                 % show the filename of files included with \lstinputlisting; also try caption instead of title
+
 %-------------------------------------------------------------------------------
 % COMMAND LINE FORMAT
 %-------------------------------------------------------------------------------
@@ -100,8 +100,8 @@
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
-    deletekeywords={...},
-    escapeinside={\%*}{*)},
+    deletekeywords={},
+    escapeinside={\%*}{*},
     extendedchars=true,
     frame=none,
     keepspaces=true,
@@ -111,8 +111,7 @@
     showstringspaces=false,
     showtabs=false,
     tabsize=2,
-    deletekeywords={default}
-}
+    deletekeywords={default}}
 %-------------------------------------------------------------------------------
 % INLINE FORMAT
 %-------------------------------------------------------------------------------
@@ -121,23 +120,22 @@
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
-    deletekeywords={...},
-    escapeinside={\%*}{*)},
+    deletekeywords={},
+    escapeinside={\%*}{*},
     extendedchars=true,
     frame=none,
     keepspaces=true,
     keywordstyle=\color{blue},
     language=java,
-    morekeywords={*,...},
+    morekeywords={*},
     showspaces=false,
     showstringspaces=false,
     showtabs=false,
-    tabsize=2,
-}
+    tabsize=2}
 
 
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
-\onehalfspacing
+\onehalfspacing{}
 \setcounter{tocdepth}{5}
 \setcounter{secnumdepth}{5}
 
@@ -178,7 +176,7 @@
 %-------------------------------------------------------------------------------
 % TITLE PAGE
 %-------------------------------------------------------------------------------
-\title{Visualize Stocks\\MSE}
+\title{Stocks Trooper\\Information Visualization\\MSE}
 \date{\today}
 \author{Axel Fahy \& Rudolf Höhn}
 \maketitle
@@ -188,15 +186,25 @@
 \pagestyle{fancy}     % Print page number again
 
 %-------------------------------------------------------------------------------
-% CHAPTER 1
+% CHAPTER INTRODUCTION
 %-------------------------------------------------------------------------------
-\chapter{Specifications}
-In this chapter, we define what is the aim of the project, the different features and mockups we are implementing and finally, the different technologies we are using.
-\section{Aim of the project}
+\include{Chapters/ChapterIntro}
 
-\section{Features to implement}
-\section{Technologies used}
+%-------------------------------------------------------------------------------
+% CHAPTER SPECIFICATIONS
+%-------------------------------------------------------------------------------
+\include{Chapters/ChapterSpecs}
 
+%-------------------------------------------------------------------------------
+% CHAPTER CONCLUSION
+%-------------------------------------------------------------------------------
+\include{Chapters/ChapterConclusion}
+
+\appendix
+%-------------------------------------------------------------------------------
+% APPENDIX 1
+%-------------------------------------------------------------------------------
+\include{Appendices/Appendix1}
 
 % \begin{table}
 % \caption{Example of a Machine Learning algorithm prediction abilities}

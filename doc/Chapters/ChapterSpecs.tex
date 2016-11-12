@@ -1,0 +1,49 @@
+\chapter{Specifications}
+\label{chapter:specifications}
+In this chapter, we describe precisely the IT related specifications (e.g. REST routes, data format, GUI).
+
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\section{System architecture}
+TODO graphical representation of the system
+
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
+\section{REST API}
+
+%-------------------------------------------------------------------------------
+\subsection{Routes and format}
+
+\subsubsection*{GET events}
+This route sends all events within a period for one index. Default is one year from now.
+\begin{verbatim}
+/events/:index[/:datestart/:dateend]
+
+[
+    {"date": "20160111"},
+    {"date": "20160212"},
+    {"date": "20160313"}
+]
+\end{verbatim}
+\subsubsection*{GET stocks}
+This route sends all the stocks data for one index (market index).
+\begin{verbatim}
+/stocks/:index
+
+[
+    {
+        "date": "20160111"
+        "value": 14.04
+    },
+    {
+        "date": "20160112"
+        "value": 15.04
+    },
+        "date": "20160113"
+        "value": 19.04
+    }
+]
+\end{verbatim}
+
+%-------------------------------------------------------------------------------
+\subsection{CORS}
