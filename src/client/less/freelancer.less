@@ -1,9 +1,17 @@
 @import "variables.less";
 @import "mixins.less";
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
 	font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	overflow-x: hidden;
+
+    // Fixed bottom
+    margin-bottom: 60px;
 }
 
 p {
@@ -27,6 +35,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-transform: uppercase;
 	font-weight: 700;
+}
+
+.vertical {
+    vertical-align: middle;
+    padding-top: 30vh;
 }
 
 hr.star-light,
@@ -178,7 +191,7 @@ header {
 
 @media(min-width:768px) {
     .navbar-custom {
-        padding: 25px 0;
+        padding: 20px 0;
         -webkit-transition: padding 0.3s;
         -moz-transition: padding 0.3s;
         transition: padding 0.3s;
@@ -190,7 +203,7 @@ header {
 	    }
     }
     .navbar-custom.affix {
-        padding: 10px 0;
+        padding: 0px 0;
 		.navbar-brand {
 	        font-size: 1.5em;
 	    }
@@ -203,6 +216,9 @@ section {
     	margin: 0;
     	font-size: 3em;
     }
+    // .container-full {
+    //     height: 66vh;
+    // }
 }
 
 section.success {
@@ -331,6 +347,12 @@ form .row:first-child .floating-label-form-group {
 }
 
 footer {
+    // Fixed bottom
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+
 	color: white;
 	h3 {
 		margin-bottom: 30px;
@@ -343,7 +365,7 @@ footer {
 		margin-bottom: 50px;
 	}
 	.footer-below {
-		padding: 25px 0;
+		padding: 10px 0;
 		background-color: darken(@theme-primary, 5%);
 	}
 }

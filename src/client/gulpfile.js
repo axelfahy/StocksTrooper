@@ -75,6 +75,12 @@ gulp.task('copy', function() {
     gulp.src(['node_modules/angular/angular.js', 'node_modules/angular/angular.min.js'])
         .pipe(gulp.dest('vendor/angular'));
 
+    gulp.src(['node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js', 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'])
+        .pipe(gulp.dest('vendor/angular-ui-bootstrap'));
+
+    gulp.src(['node_modules/angular-timeline/dist/angular-timeline.js','node_modules/angular-timeline/dist/angular-timeline.css'])
+        .pipe(gulp.dest('vendor/angular-timeline'));
+
     gulp.src([
             'node_modules/font-awesome/**',
             '!node_modules/font-awesome/**/*.map',

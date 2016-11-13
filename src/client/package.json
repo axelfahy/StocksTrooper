@@ -20,6 +20,8 @@
     "gulp-uglify": "^1.5.4",
     "gulp-concat": ">=0.10",
     "angular": "^1.5.8",
+    "angular-ui-bootstrap": "^2.2.0",
+    "angular-timeline": "^1.7.0",
     "jquery": "^1.11.3"
   },
   "repository": {

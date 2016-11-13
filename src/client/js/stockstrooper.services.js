@@ -5,8 +5,8 @@
         .module('stockstrooper')
         .factory('STServices', STServices);
 
-    STServices.$inject = ['$http', '$q'];
-    function STServices($http, $q) {
+    STServices.$inject = ['$http', '$q', 'REST'];
+    function STServices($http, $q, REST) {
 
         var services = {
             getEvents: getEvents,
@@ -24,7 +24,7 @@
         function getEvents(index, dateStart, dateEnd) {
             var deffered = $q.defer();
 
-            // TODO : integrate dateStart and dateEnd
+            // TODO Integrate dateStart and dateEnd
 
             $http.get(REST + '/events/' + index)
                 .success(function(res) {
