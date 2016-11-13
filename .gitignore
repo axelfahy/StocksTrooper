@@ -100,3 +100,9 @@ ENV/
 
 # Vim temporary files
 *.swp
+
+# npm
+node_modules/
+
+# vendor
+vendor/
