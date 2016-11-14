@@ -100,3 +100,7 @@ ENV/
 
 # Vim temporary files
 *.swp
+
+# Sensitive information of Flask application
+instance/
+
