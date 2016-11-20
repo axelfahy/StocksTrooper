@@ -1,0 +1,234 @@
+[
+  {
+    "type": "get",
+    "url": "/events/:index/:date_start/:date_end",
+    "title": "Request events of index between date_start and date_end",
+    "name": "get_events",
+    "group": "events",
+    "description": "<p>Calculate events of index between two dates. For now, the number of events to generate is hardcoded to 5.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "index",
+            "description": "<p>Index to calculate the event from.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "date_start",
+            "description": "<p>Start date for the calculation of events.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "date_end",
+            "description": "<p>End date for the calculation of events.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Date of an event.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"date\": \"20160112\",\n},\n{\n    \"date\": \"20160113\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "stockstrooper/views.py",
+    "groupTitle": "events"
+  },
+  {
+    "type": "get",
+    "url": "/index/:index",
+    "title": "Check if index exists",
+    "name": "check_index",
+    "group": "index",
+    "description": "<p>Check wheter an index exists.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "index",
+            "description": "<p>Index to check the existence.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "valid",
+            "description": "<p>Return true if index exists, else false</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"valid\": true,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "stockstrooper/views.py",
+    "groupTitle": "index"
+  },
+  {
+    "type": "get",
+    "url": "/news/:index/:date_event/:date_end",
+    "title": "Get a list of news of index at date_event",
+    "name": "get_news_from_event",
+    "group": "news",
+    "description": "<p>Get a list of news of an index at a precise date. Dates are events.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "index",
+            "description": "<p>Index related to the news</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Date of the event to get the news from</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "headline",
+            "description": "<p>Headline of the article</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description of the article</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Date of the article</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "source",
+            "description": "<p>Source of the article</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "url",
+            "description": "<p>Url of the article</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"headline\": \"Hess and Medivation Slide, Apple and Lennar Advance\",\n    \"description\": \"Stocks that moved substantially or traded heavily Tuesday on the New York Stock Exchange and the Nasdaq stock market:\",\n    \"source\": \"AP\",\n    \"date\": \"20160329\",\n    \"url\": \"http://www.nytimes.com/aponline/2016/03/29/business/ap-us-financial-markets-stocks.html\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "stockstrooper/views.py",
+    "groupTitle": "news"
+  },
+  {
+    "type": "get",
+    "url": "/stocks/<index>",
+    "title": "Request all stocks values from <index>",
+    "name": "get_stocks",
+    "group": "stocks",
+    "description": "<p>Get all historic values for stocks. The value is the adjusted closing price of the day.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "index",
+            "optional": false,
+            "field": "index",
+            "description": "<p>to request the historic from</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": "<p>date related to the value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>adjusted closing price of the stock for the related date</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"date\": \"20160112\",\n    \"value\": \"15.04\"\n},\n{\n    \"date\": \"20160113\",\n    \"value\": \"19.04\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "stockstrooper/views.py",
+    "groupTitle": "stocks"
+  }
+]
