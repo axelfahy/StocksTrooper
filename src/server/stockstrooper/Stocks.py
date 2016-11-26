@@ -99,29 +99,49 @@ class Stocks:
                 date_start = (datetime.now() - dateutil.relativedelta(years=1)).strftime('%Y%m%d')
                 date_end = datetime.datetime.today().strftime('%Y%m%d')
 
-            data = self.get_hist_between_dates(date_start, date_end)
+            data_hist = self.get_hist_between_dates(date_start, date_end)
             # TODO : Work directly with self.data and extract the range wanted
-            print("Data")
-            # print(data)
-            dates = data.keys()
-            values = data.values()
+            dates = [d['date'] for d in data_hist]
+            values = [d['value'] for d in data_hist]
 
-            # Take 10% of the max - min as threashold
-            threshold = (max(values) - min(values)) * 0.2
+            # Take 10% of the max - min as threshold
+            print('Max : {} / Min : {}'.format(max(values), min(values)))
+            threshold = (max(values) - min(values)) * 0.09
             print('Threshold : {}'.format(threshold))
 
-            w_dates = window(dates, 10)
-            w_values = window(values, 10)
+            # w_dates = window(dates, 10)
+            # w_values = window(values, 10)
+            # Create sublist of 10 elements each to check for threshold in those lists
+            w_dates = []
+            w_values = []
+            for i in range(0, len(dates), 10):
+                w_dates.append(list(dates[i:i+10]))
+                w_values.append(list(values[i:i+10]))
 
             events = []
 
+            window_size = 10
+            i = 0
+
             for d, v in zip(w_dates, w_values):
+                #print('Max : {} / Min : {} / Res : {}'.format(max(v), min(v), max(v) - min(v)))
                 if max(v) - min(v) > threshold:
-                    events.append(max(d))
+                    print('Found : {}'.format(d))
+                    if not event_registered(d, events):
+                        events.append(max(d))
 
             print(events)
+            result = [{"date": x} for x in events]
+            return result
 
-            return "true"
+
+def event_registered(list_dates, list_events):
+    """Check if an event is already register."""
+    for i in list_dates:
+        if i in list_events:
+            return True
+
+    return False
 
 
 def window(seq, n=2):

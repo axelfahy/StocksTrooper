@@ -62,7 +62,7 @@ def get_events(index, date_start, date_end):
     """
     # TODO : mettre stock en global et stocker les donnees dans la classe stock
     stock = Stocks(index)
-    return stock.get_events(date_start, date_end)
+    return jsonify(stock.get_events(date_start, date_end))
 
 
 @app.route('/news/<index>/<date_event>')
