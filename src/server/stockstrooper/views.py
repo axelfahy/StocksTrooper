@@ -36,7 +36,6 @@ def get_stocks(index):
     return stock.get_all_hist()
 
 
-# Route to get the events between two dates
 @app.route('/events/<index>/<date_start>/<date_end>')
 def get_events(index, date_start, date_end):
     """
@@ -61,10 +60,11 @@ def get_events(index, date_start, date_end):
             "date": "20160113",
         }
     """
-    return "get_events - to be implemented"
+    # TODO : mettre stock en global et stocker les donnees dans la classe stock
+    stock = Stocks(index)
+    return stock.get_events(date_start, date_end)
 
 
-# Route to get the news of a date (event)
 @app.route('/news/<index>/<date_event>')
 def get_news_from_event(index, date_event):
     """
