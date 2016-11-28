@@ -104,3 +104,8 @@ ENV/
 # Sensitive information of Flask application
 instance/
 
+# npm
+node_modules/
+
+# vendor
+vendor/

@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-sm-6">
+        <h3>{{vm.currentNews.headline}}</h3>
+        <span>{{vm.currentNews.description}}</span>
+        <a ng-href="{{vm.currentNews.url}}" class="pull-right">{{vm.currentNews.source}}</a>
+    </div>
+    <div class="col-sm-6">
+        <div class="list-group">
+            <a href="#" ng-repeat="news in vm.data" class="list-group-item" ng-class="{'active': $index == vm.currentNews.index}">
+                <h4 class="list-group-item-heading">{{news.headline}}</h4>
+                <p class="list-group-item-text">{{news.source}}</p>
+            </a>
+        </div>
+    </div>
+</div>
