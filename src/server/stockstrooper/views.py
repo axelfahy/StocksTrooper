@@ -3,6 +3,7 @@
 from stockstrooper import app
 from .News import News
 from .Stocks import Stocks
+import json
 
 from flask import jsonify
 
@@ -60,9 +61,10 @@ def get_events(index, date_start, date_end):
             "date": "20160113",
         }
     """
-    # TODO : mettre stock en global et stocker les donnees dans la classe stock
     stock = Stocks(index)
-    return jsonify(stock.get_events(date_start, date_end))
+    return json.dumps(stock.get_events(date_start, date_end))
+    # WTF jsonify working for get_stocks but not here...
+    # return jsonify(stock.get_events(date_start, date_end))
 
 
 @app.route('/news/<index>/<date_event>')
