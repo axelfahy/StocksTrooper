@@ -41,7 +41,7 @@ gulp.task('minify-css', ['less'], function() {
 
 // Minify JS
 gulp.task('minify-js-app', function() {
-    return gulp.src(['js/app.module.js', 'js/app.*.js', '!js/*.min.js'])
+    return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/list_news.directive.js', '!js/*.min.js'])
         .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
@@ -80,6 +80,9 @@ gulp.task('copy', function() {
 
     gulp.src(['node_modules/angular-timeline/dist/angular-timeline.js','node_modules/angular-timeline/dist/angular-timeline.css'])
         .pipe(gulp.dest('vendor/angular-timeline'));
+
+    gulp.src(['node_modules/highcharts-ng/dist/highcharts-ng.min.js', 'node_modules/highcharts-ng/dist/lazyload.min.js'])
+        .pipe(gulp.dest('vendor/highcharts-ng'));
 
     gulp.src([
             'node_modules/font-awesome/**',
