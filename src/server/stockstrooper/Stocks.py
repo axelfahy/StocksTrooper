@@ -85,7 +85,7 @@ class Stocks:
             """Get the name of the index."""
             return self.stock.get_name()
 
-        def get_events(self, date_start=None, date_end=None):
+        def get_events(self, date_start=None, date_end=None, nb_events=5, window_size=10):
             """Calculate events date from historical data
 
             Args:
@@ -104,34 +104,43 @@ class Stocks:
             dates = [d['date'] for d in data_hist]
             values = [d['value'] for d in data_hist]
 
-            # Take 10% of the max - min as threshold
-            print('Max : {} / Min : {}'.format(max(values), min(values)))
+            # Take x% of the max - min as threshold
+            # print('Max : {} / Min : {}'.format(max(values), min(values)))
             threshold = (max(values) - min(values)) * 0.09
-            print('Threshold : {}'.format(threshold))
+            # print('Threshold : {}'.format(threshold))
 
-            # w_dates = window(dates, 10)
-            # w_values = window(values, 10)
             # Create sublist of 10 elements each to check for threshold in those lists
             w_dates = []
             w_values = []
-            for i in range(0, len(dates), 10):
-                w_dates.append(list(dates[i:i+10]))
-                w_values.append(list(values[i:i+10]))
+            for i in range(0, len(dates), window_size):
+                w_dates.append(list(dates[i:i+window_size]))
+                w_values.append(list(values[i:i+window_size]))
 
+            # Events list contains a tuple, with the different between the max and the min and
+            # the date of the event.
+            # It will be used to retrieve the most important events.
             events = []
 
-            window_size = 10
-            i = 0
+            while len(events) < nb_events:
+                for d, v in zip(w_dates, w_values):
+                    #print('Max : {} / Min : {} / Res : {}'.format(max(v), min(v), max(v) - min(v)))
+                    if max(v) - min(v) > threshold:
+                        #print('Found : {}'.format(d))
+                        if not event_registered(d, events):
+                            events.append((max(v) - min(v), d[len(d) // 2]))
+                if len(events) < nb_events:
+                    events = []
+                    threshold -= 0.05
 
-            for d, v in zip(w_dates, w_values):
-                #print('Max : {} / Min : {} / Res : {}'.format(max(v), min(v), max(v) - min(v)))
-                if max(v) - min(v) > threshold:
-                    print('Found : {}'.format(d))
-                    if not event_registered(d, events):
-                        events.append(max(d))
+            # Get the most important events (based on max, min difference)
+            if len(events) > nb_events:
+                events.sort()
+                events = events[-nb_events:]
 
-            print(events)
-            result = [{"date": x} for x in events]
+            date_events = [d[1] for d in events]
+
+            date_events.sort(reverse=True)
+            result = [{"date": int(x)} for x in date_events]
             return result
 
 
@@ -143,17 +152,3 @@ def event_registered(list_dates, list_events):
 
     return False
 
-
-def window(seq, n=2):
-    "Returns a sliding window (of width n) over data from the iterable"
-    "   s -> (s0,s1,...s[n-1]), (s1,s2,...,sn), ...                   "
-    it = iter(seq)
-    result = tuple(islice(it, n))
-    if len(result) == n:
-        yield result
-    for elem in it:
-        result = result[1:] + (elem,)
-        yield result
-
-        # TODO : Calculate events date
-        # Return a list of dates
