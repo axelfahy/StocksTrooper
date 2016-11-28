@@ -12,5 +12,5 @@ __version__ = "0.1"
 __date__ = "12.11.2016"
 __status__ = "Development"
 
-app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
+app.run(host='0.0.0.0', port=PORT, debug=DEBUG, threaded=True)
 
