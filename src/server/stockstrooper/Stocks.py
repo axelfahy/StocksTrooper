@@ -3,17 +3,19 @@
 from datetime import datetime
 import dateutil.relativedelta
 from flask import jsonify
+import json
+import pandas as pd
+from pandas_datareader import data, wb
 from yahoo_finance import Share
-from itertools import islice
 
 
 class Stocks:
     """Stocks class
 
-    Using the yahoo_finance API :
+    Using the yahoo_finance API and pandas to :
 
-        - retrieve historical data
-        - check if an index exists
+        - retrieve historical data (pandas, because its faster)
+        - check if an index exists (yahoo_finance)
         - calculate events from historical data
 
     """
@@ -49,27 +51,28 @@ class Stocks:
             """
             if self._data is None:
                 print('Loading data of {}'.format(self.index))
-                self._data = self.get_hist_between_dates('20060101', datetime.now()
-                                                        .strftime('%Y%m%d'))
+                df = data.DataReader(self.index, 'yahoo', datetime(1900, 1, 1),
+                        datetime.today())['Adj Close']
+                self._data = [list(a) for a in zip(df.index.values.tolist(),
+                              df.values.tolist())]
             return self._data
 
         def get_all_hist(self):
             """Get historical data of index."""
-            return jsonify(self.data)
+            return json.dumps(self.data)
 
         def get_hist_between_dates(self, date_start, date_end):
             """Get historical data of index between dates."""
             try:
                 if self.is_index():
-                    # TODO Maybe to slow, try another retrieving method ? Is Pandas better ?
                     # Change format of dates
-                    d_start = datetime.strptime(date_start, '%Y%m%d').strftime('%Y-%m-%d')
-                    d_end = datetime.strptime(date_end, '%Y%m%d').strftime('%Y-%m-%d')
+                    d_start = datetime.strptime(date_start, '%Y%m%d')
+                    d_end = datetime.strptime(date_end, '%Y%m%d')
                     # Retrieve the data
-                    data_yahoo = self.stock.get_historical(d_start, d_end)
-                    # Change to format in json (field : "date", "value")
-                    result = [{"date": int(datetime.strptime(x['Date'], '%Y-%m-%d').strftime('%Y%m%d')), "value": float(x['Adj_Close'])} for x in data_yahoo]
-                    return result
+                    df = data.DataReader(self.index, 'yahoo', d_start, d_end)['Adj Close']
+                    self._data = [list(a) for a in zip(df.index.values.tolist(),
+                                  df.values.tolist())]
+                    return self._data
             except Exception as e:
                 print('Error while getting historic of data : {}'.format(e))
                 return None
@@ -96,13 +99,12 @@ class Stocks:
             """
             # If dates not provided, calculate the last year
             if date_start is None or date_end is None:
-                date_start = (datetime.now() - dateutil.relativedelta(years=1)).strftime('%Y%m%d')
-                date_end = datetime.datetime.today().strftime('%Y%m%d')
+                date_start = datetime.now() - dateutil.relativedelta(years=1)
+                date_end = datetime.datetime.today()
 
             data_hist = self.get_hist_between_dates(date_start, date_end)
-            # TODO : Work directly with self.data and extract the range wanted
-            dates = [d['date'] for d in data_hist]
-            values = [d['value'] for d in data_hist]
+            dates = [d[0] for d in data_hist]
+            values = [d[1] for d in data_hist]
 
             # Take x% of the max - min as threshold
             # print('Max : {} / Min : {}'.format(max(values), min(values)))
@@ -140,7 +142,7 @@ class Stocks:
             date_events = [d[1] for d in events]
 
             date_events.sort(reverse=True)
-            result = [{"date": int(x)} for x in date_events]
+            result = [{"date": pd.to_datetime(x).to_pydatetime().strftime('%Y%m%d')} for x in date_events]
             return result
 
 

@@ -5,7 +5,7 @@ from .News import News
 from .Stocks import Stocks
 import json
 
-from flask import jsonify
+from flask import jsonify, Response
 
 
 @app.route('/stocks/<index>')
@@ -34,7 +34,7 @@ def get_stocks(index):
         }
     """
     stock = Stocks(index)
-    return stock.get_all_hist()
+    return Response(json.dumps(stock.data), mimetype='application/json')
 
 
 @app.route('/events/<index>/<date_start>/<date_end>')
@@ -62,9 +62,7 @@ def get_events(index, date_start, date_end):
         }
     """
     stock = Stocks(index)
-    return json.dumps(stock.get_events(date_start, date_end))
-    # WTF jsonify working for get_stocks but not here...
-    # return jsonify(stock.get_events(date_start, date_end))
+    return Response(json.dumps(stock.get_events(date_start, date_end)), mimetype='application/json')
 
 
 @app.route('/news/<index>/<date_event>')
@@ -96,7 +94,7 @@ def get_news_from_event(index, date_event):
         }
     """
     news = News(app.config['NYT_API_KEY'])
-    return news.get_news(index, date_event)
+    return Response(json.dumps(news.get_news(index, date_event)), mimetype='application/json')
 
 
 # Route to check if an index exists
