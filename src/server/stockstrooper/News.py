@@ -33,12 +33,12 @@ class News:
         try:
             stock = Stocks(index)
             # Set a margin for the dates
-            date_start = datetime.strptime(date, '%Y%m%d') - timedelta(days=1000)
-            date_end = datetime.strptime(date, '%Y%m%d') + timedelta(days=2000)
+            date_start = datetime.strptime(date, '%Y%m%d') - timedelta(days=100)
+            date_end = datetime.strptime(date, '%Y%m%d') + timedelta(days=100)
 
             # Parameters of request
             params = {'begin_date': date_start.strftime('%Y%m%d'),
-                       'end_date': date_end.strftime('%Y%m%d'), 'q': index,
+                       'end_date': date_end.strftime('%Y%m%d'), 'q': stock.index,
                        'fq': 'headline:{} OR headline:{}'.format(stock.get_name(), stock.index),
                        'sort': 'newest', 'api_key': self.api_key}
             request = self.NY_TIMES_API + urlencode(params)
@@ -55,8 +55,7 @@ class News:
                 docs[index]['date'] = docs[index].pop('pub_date')
                 docs[index]['url'] = docs[index].pop('web_url')
 
-            # Cannot use jsonify because of the list of dict
-            return Response(json.dumps(docs), mimetype='application/json')
+            return docs
         except:
-            return jsonify(dict())
+            return dict()
 
