@@ -53,10 +53,8 @@ class Stocks:
                 print('Loading data of {}'.format(self.index))
                 df = data.DataReader(self.index, 'yahoo', datetime(1900, 1, 1),
                         datetime.today())['Adj Close']
-                # self._data = [list(a) for a in zip(df.index.values.tolist(),
-                              # df.values.tolist())]
-                dates = [int(pd.to_datetime(x).to_pydatetime().replace(tzinfo=timezone.utc).timestamp()) for x in df.index.values.tolist()]
-                self._data = [list(a) for a in zip(dates, df.values.tolist())]
+                self._data = [list(a) for a in zip(df.index.values.tolist(),
+                              df.values.tolist())]
             return self._data
 
         def get_all_hist(self):
@@ -72,8 +70,8 @@ class Stocks:
                     d_end = datetime.strptime(date_end, '%Y%m%d')
                     # Retrieve the data
                     df = data.DataReader(self.index, 'yahoo', d_start, d_end)['Adj Close']
-                    dates = [int(pd.to_datetime(x).to_pydatetime().replace(tzinfo=timezone.utc).timestamp()) for x in df.index.values.tolist()]
-                    self._data = [list(a) for a in zip(dates, df.values.tolist())]
+                    self._data = [list(a) for a in zip(df.index.values.tolist(),
+                                  df.values.tolist())]
                     return self._data
             except Exception as e:
                 print('Error while getting historic of data : {}'.format(e))
