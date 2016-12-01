@@ -29,47 +29,10 @@
             },
             series: [],
             title: {
-                text: 'Hello'
+                text: 'AAPL Stock Index'
             },
             useHighStocks: true
         }
-
-        $scope.chartConfig.series.push({
-                id: 1,
-                data: [
-                    [1147651200000, 23.15],
-                    [1147737600000, 23.01],
-                    [1147824000000, 22.73],
-                    [1147910400000, 22.83],
-                    [1147996800000, 22.56],
-                    [1148256000000, 22.88],
-                    [1148342400000, 22.79],
-                    [1148428800000, 23.50],
-                    [1148515200000, 23.74],
-                    [1148601600000, 23.72],
-                    [1148947200000, 23.15],
-                    [1149033600000, 22.65]
-                ]
-            },   {
-                id: 2,
-                data: [
-                    [1147651200000, 25.15],
-                    [1147737600000, 25.01],
-                    [1147824000000, 25.73],
-                    [1147910400000, 25.83],
-                    [1147996800000, 25.56],
-                    [1148256000000, 25.88],
-                    [1148342400000, 25.79],
-                    [1148428800000, 25.50],
-                    [1148515200000, 26.74],
-                    [1148601600000, 26.72],
-                    [1148947200000, 26.15],
-                    [1149033600000, 26.65]
-                ]
-
-            }
-
-        );
 
         function init() {
             vm.index = 'aapl';
@@ -108,6 +71,7 @@
         // TODO Call the right services
 
         function getEvents(index) {
+            // STServices.getEvents(i)
             vm.events = [{
                 "date": "20160111"
             }, {
@@ -118,16 +82,16 @@
         }
 
         function getStocks(index) {
-            vm.stocks = [{
-                "date": "20160111",
-                "value": 14.04
-            }, {
-                "date": "20160112",
-                "value": 15.04
-            }, {
-                "date": "20160113",
-                "value": 19.04
-            }];
+            STServices.getStocks(index)
+                .then(function(res) {
+                    var d = [];
+                    for (var i = 0; i < res.length; i++) {
+                        d.push([res[i][0]/1000000, res[i][1]]);
+                    }
+                    $scope.chartConfig.series.push({
+                        id: 3,
+                        data: d});
+                });
         }
 
         function getNews(index) {
@@ -141,15 +105,10 @@
         }
 
         function isValid(index) {
-
             STServices.getValid(index)
-            .then(function(res) {
-                vm.valid = res;
-            });
-
-            // vm.valid = {
-            //     "valid": true
-            // };
+                .then(function(res) {
+                    vm.valid = res;
+                });
         }
         ///////////////////////////////////////////////////////////////////////
 
