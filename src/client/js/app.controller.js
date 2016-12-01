@@ -141,9 +141,15 @@
         }
 
         function isValid(index) {
-            vm.valid = {
-                "valid": true
-            };
+
+            STServices.getValid(index)
+            .then(function(res) {
+                vm.valid = res;
+            });
+
+            // vm.valid = {
+            //     "valid": true
+            // };
         }
         ///////////////////////////////////////////////////////////////////////
 
