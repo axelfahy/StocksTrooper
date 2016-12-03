@@ -29,7 +29,15 @@
             },
             series: [],
             title: {
-                text: 'AAPL Stock Index'
+                // text: 'AAPL Stock Index'
+            },
+            xAxis: {
+                title: {
+                    text: 'AAPL'
+                },
+                // credits: {
+                //     enabled: true
+                // }
             },
             useHighStocks: true
         }
@@ -37,9 +45,11 @@
         function init() {
             vm.index = 'aapl';
             vm.getEvents(vm.index);
-            vm.getStocks(vm.index);
+            // vm.getStocks(vm.index);
             vm.getNews(vm.index);
             vm.isValid(vm.index);
+            vm.loading = true;
+            vm.welcome = true;
 
             vm.events = [{
                 badgeClass: 'success',
@@ -82,15 +92,21 @@
         }
 
         function getStocks(index) {
+            vm.welcome = false;
+            vm.loading = true;
             STServices.getStocks(index)
                 .then(function(res) {
+                    vm.loading = false;
+                    vm.currentIndex = index;
                     var d = [];
                     for (var i = 0; i < res.length; i++) {
-                        d.push([res[i][0]/1000000, res[i][1]]);
+                        d.push([res[i][0] / 1000000, res[i][1]]);
                     }
                     $scope.chartConfig.series.push({
                         id: 3,
-                        data: d});
+                        data: d
+                    });
+                    console.log($scope.chartConfig.getHighcharts());
                 });
         }
 

@@ -84,6 +84,9 @@ gulp.task('copy', function() {
     gulp.src(['node_modules/highcharts-ng/dist/highcharts-ng.min.js', 'node_modules/highcharts-ng/dist/lazyload.min.js'])
         .pipe(gulp.dest('vendor/highcharts-ng'));
 
+    gulp.src(['node_modules/angular-spinkit/build/angular-spinkit.min.js', 'node_modules/angular-spinkit/build/angular-spinkit.min.css'])
+        .pipe(gulp.dest('vendor/angular-spinkit'));
+
     gulp.src([
             'node_modules/font-awesome/**',
             '!node_modules/font-awesome/**/*.map',

@@ -23,6 +23,7 @@
     "angular-ui-bootstrap": "^2.2.0",
     "angular-timeline": "^1.7.0",
     "highcharts-ng": "^0.0.13",
+    "angular-spinkit": "^0.3.4",
     "jquery": "^1.11.3"
   },
   "repository": {
