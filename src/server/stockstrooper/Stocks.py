@@ -125,7 +125,7 @@ class Stocks:
                 for d, v in zip(w_dates, w_values):
                     if max(v) - min(v) > threshold:
                         if not event_registered(d, events):
-                            # Calculate the trend (positif = 1 / negative = -1) of the event
+                            # Calculate the trend (positive = 1 / negative = -1) of the event
                             trend = -1 if v.index(min(v)) > v.index(max(v)) else 1
                             # The date stored is the middle one
                             events.append((max(v) - min(v), d[len(d) // 2], trend))

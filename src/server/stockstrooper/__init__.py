@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 # Define the WSGI application object
 app = Flask(__name__, instance_relative_config=True)
 
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 # Configurations
 app.config.from_object('config')
