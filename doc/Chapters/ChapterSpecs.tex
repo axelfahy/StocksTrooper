@@ -116,6 +116,8 @@ Afterwards, we take all the data and process them by samples of a specific size 
 
 Depending of the stock we are processing, we may have more or less events that we wanted. If we have found more events, we take the highest events and keep them. Events will be sorted by highest difference between max and min value in order to know which ones are the most important. However, if we have less events, the threshold is decrease by $0.05$ and we process all the samples all over again until we have enough events.
 
+This technique is not bulletproof. By processing the values sample by sample, we could miss some events.
+
 
 
 
