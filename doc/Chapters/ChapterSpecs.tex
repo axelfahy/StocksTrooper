@@ -12,7 +12,7 @@ TODO graphical representation of the system
 \section{Flow diagram}
 The figure~\ref{fig:specs:flowdiagram} defines precisely how the user interacts with the application. It allows to have a clear representation of the system.
 
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
 \includegraphics[scale=0.5]{Figures/workflow-stockstrooper.png}
 \caption{Flow diagram of the user interaction}
@@ -27,14 +27,23 @@ The figure~\ref{fig:specs:flowdiagram} defines precisely how the user interacts 
 \subsection{Routes and format}
 
 \subsubsection*{GET events}
-This route sends all events within a period for one index. Default is one year from present.
+This route sends all events within a period for one index. Default is one year from present. With each event comes its trend. A positive event has a value of \textit{1} and a negative one a value of \textit{-1}.
 \begin{verbatim}
 /events/:index[/:datestart/:dateend]
 
 [
-    {"date": "20160111"},
-    {"date": "20160212"},
-    {"date": "20160313"}
+    {
+        "date": "20160502",
+        "trends": -1
+    },
+    {
+        "date": "20160716",
+        "trends": -1
+    },
+    {
+        "date": "20150123",
+        "trends": 1
+    }
 ]
 \end{verbatim}
 
@@ -44,17 +53,18 @@ This route sends all the stocks data for one index (market index).
 /stocks/:index
 
 [
-    {
-        "date": "20160111"
-        "value": 14.04
-    },
-    {
-        "date": "20160112"
-        "value": 15.04
-    },
-        "date": "20160113"
-        "value": 19.04
-    }
+      [
+            345427200000000000,
+            0.426842
+      ],
+      [
+            345686400000000000,
+            0.404572
+      ],
+      [
+            345772800000000000,
+            0.374879
+      ]
 ]
 \end{verbatim}
 
@@ -65,14 +75,12 @@ This route sends all the news related to one index and one event.
 
 [
     {
-        "headline": "Huge drop for apple",
-        "description": "Lorem ipsum dolor sit amet, consectetur
-adipiscing elit. Vestibulum laoreet suscipit tristique. Donec
-suscipit velit id feugiat placerat. Ut eget egestas risus,
-at fermentum ipsum.",
-        "date": "20160112",
-        "source": "Reuters",
-        "url": "http://www.reuters.com/?a=xT6sSPOe99"
+        "url": "http://www.nytimes.com/reuters/2016/01/08/business/
+                08reuters-apple-stock-research.html",
+        "headline": "Wall St. Bets on Apple Bounceback Despite
+                     iPhone Shipment Worries",
+        "date": "2016-01-08T09:36:56Z",
+        "source": "Reuters"
     }
 ]
 \end{verbatim}
@@ -88,3 +96,28 @@ This route sends a boolean variable which indicates if the index is valid or not
 \end{verbatim}
 %-------------------------------------------------------------------------------
 \subsection{CORS}
+
+The \textit{CORS} problems were handle with \textit{Flask}.
+
+%-------------------------------------------------------------------------------
+\subsection{Detection of events}
+
+The events of a company are detected by searching the biggest changes of share value during a short period of time.
+
+To do this, a threshold is calculated in order to define if the changes of share will be considered as an event.
+
+\begin{lstlisting}[language=python, belowskip=-1.0 \baselineskip]
+    threshold = (max(values) - min(values)) * 0.09
+\end{lstlisting}
+
+This allows to have a threshold that varies depending on the volatility of the actions. In order to avoid having a threshold to big, the $90\%$ of the calculated value is taken.
+
+Afterwards, we take all the data and process them by samples of a specific size (default value is a size of 10 values). In this current sample, we will calculate the difference between the maximum and the minimal value. If this value exceeds the threshold, this sample will be considered as an event. The sample is composed of multiple dates, the middle date of the sample is chosen to represent the event.
+
+Depending of the stock we are processing, we may have more or less events that we wanted. If we have found more events, we take the highest events and keep them. Events will be sorted by highest difference between max and min value in order to know which ones are the most important. However, if we have less events, the threshold is decrease by $0.05$ and we process all the samples all over again until we have enough events.
+
+
+
+
+
+
