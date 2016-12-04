@@ -107,9 +107,7 @@ class Stocks:
             values = [d[1] for d in data_hist]
 
             # Take x% of the max - min as threshold
-            # print('Max : {} / Min : {}'.format(max(values), min(values)))
             threshold = (max(values) - min(values)) * 0.09
-            # print('Threshold : {}'.format(threshold))
 
             # Create sublist of 10 elements each to check for threshold in those lists
             w_dates = []
@@ -125,11 +123,12 @@ class Stocks:
 
             while len(events) < nb_events:
                 for d, v in zip(w_dates, w_values):
-                    #print('Max : {} / Min : {} / Res : {}'.format(max(v), min(v), max(v) - min(v)))
                     if max(v) - min(v) > threshold:
-                        #print('Found : {}'.format(d))
                         if not event_registered(d, events):
-                            events.append((max(v) - min(v), d[len(d) // 2]))
+                            # Calculate the trend (positif = 1 / negative = -1) of the event
+                            trend = -1 if v.index(min(v)) > v.index(max(v)) else 1
+                            # The date stored is the middle one
+                            events.append((max(v) - min(v), d[len(d) // 2], trend))
                 if len(events) < nb_events:
                     events = []
                     threshold -= 0.05
@@ -139,10 +138,10 @@ class Stocks:
                 events.sort()
                 events = events[-nb_events:]
 
-            date_events = [d[1] for d in events]
+            date_events = [(d[1], d[2]) for d in events]
 
             date_events.sort(reverse=True)
-            result = [{"date": pd.to_datetime(x).to_pydatetime().strftime('%Y%m%d')} for x in date_events]
+            result = [{"date": pd.to_datetime(x[0]).to_pydatetime().strftime('%Y%m%d'), "trend": x[1]} for x in date_events]
             return result
 
 
