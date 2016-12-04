@@ -93,7 +93,11 @@ hr.star-primary:after {
     margin: 0 auto;
     display: block;
     margin: 0 auto 20px;
-    zoom: 50%;
+    zoom: 0.5;
+    -ms-zoom: 0.5;
+    -webkit-zoom: 0.5;
+    -moz-transform:  scale(0.5,0.5);
+    -moz-transform-origin: top;
 }
 
 header {
@@ -562,4 +566,11 @@ footer {
 
 .cube {
     background: @theme-success;
+}
+
+.img-lang {
+    text-align: right;
+    margin-top: 10px;
+    width: 30px;
+    height:30px;
 }

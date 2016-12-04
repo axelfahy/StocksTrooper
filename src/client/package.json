@@ -2,10 +2,10 @@
   "name": "stockstrooper",
   "title": "Stocks Trooper",
   "version": "0.1.0",
-  "homepage": "https://stockstrooper.io",
+  "homepage": "http://stockstrooper.lemur.ovh",
   "author": "Rudolf Hohn & Axel Fahy",
   "license": {
-    "type": "MIT",
+    "type": "GNUGPLv3",
     "url": "https://github.com/rudy2707/stockstrooper/LICENSE"
   },
   "devDependencies": {
@@ -24,6 +24,7 @@
     "angular-timeline": "^1.7.0",
     "highcharts-ng": "^0.0.13",
     "angular-spinkit": "^0.3.4",
+    "angular-translate": "^2.13.0",
     "jquery": "^1.11.3"
   },
   "repository": {

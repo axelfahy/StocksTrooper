@@ -41,7 +41,7 @@ gulp.task('minify-css', ['less'], function() {
 
 // Minify JS
 gulp.task('minify-js-app', function() {
-    return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/list_news.directive.js', '!js/*.min.js'])
+    return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/list_news.directive.js', '!js/*.min.js', 'js/translate.config.js'])
         .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
@@ -86,6 +86,9 @@ gulp.task('copy', function() {
 
     gulp.src(['node_modules/angular-spinkit/build/angular-spinkit.min.js', 'node_modules/angular-spinkit/build/angular-spinkit.min.css'])
         .pipe(gulp.dest('vendor/angular-spinkit'));
+
+    gulp.src(['node_modules/angular-translate/dist/angular-translate.min.js'])
+        .pipe(gulp.dest('vendor/angular-translate'));
 
     gulp.src([
             'node_modules/font-awesome/**',

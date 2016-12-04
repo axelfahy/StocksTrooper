@@ -5,15 +5,16 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['STServices', '$scope'];
+    AppController.$inject = ['STServices', '$scope', '$translate'];
 
-    function AppController(STServices, $scope) {
+    function AppController(STServices, $scope, $translate) {
         var vm = this;
 
         vm.getEvents = getEvents;
         vm.getStocks = getStocks;
         vm.getNews = getNews;
         vm.isValid = isValid;
+        vm.changeLanguage = changeLanguage;
 
         $scope.chartConfig = {
             options: {
@@ -44,6 +45,7 @@
 
         function init() {
             vm.index = 'aapl';
+            vm.lang = 'en';
             vm.getEvents(vm.index);
             // vm.getStocks(vm.index);
             vm.getNews(vm.index);
@@ -127,6 +129,11 @@
                 });
         }
         ///////////////////////////////////////////////////////////////////////
+
+        function changeLanguage(lang) {
+            vm.lang = lang;
+            $translate.use(lang);
+        }
 
         init();
     }
