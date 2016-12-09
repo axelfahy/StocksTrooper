@@ -109,3 +109,5 @@ node_modules/
 
 # vendor
 vendor/
+
+*.min.js
