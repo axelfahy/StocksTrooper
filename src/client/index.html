@@ -19,11 +19,12 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
         <!-- Angular Timeline -->
-        <link href="vendor/angular-timeline/angular-timeline.css" rel="stylesheet">
+        <!-- <link href="vendor/angular-timeline/angular-timeline.css" rel="stylesheet"> -->
         <link href="vendor/angular-spinkit/angular-spinkit.min.css" rel="stylesheet">
 
         <!-- Theme CSS -->
         <link href="css/freelancer.min.css" rel="stylesheet">
+        <link href="css/timeline.min.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -88,7 +89,7 @@
                 <!-- Main content -->
                 <!-- <div class="row" ng-show="false"> -->
                 <div class="row" ng-show="!vm.loading">
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="row">
                             <div class="col-md-12">
                                 <h4>{{'CHART.TITLE' | translate:{index: vm.index} | uppercase}}</h4>
@@ -102,8 +103,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <h4>TODO: IMPORTANT BATTLES</h4>
+                    <div class="col-md-2">
+                        <h4>{{'EVENTS.TITLE' | translate }}</h4>
+                        <st-timeline></st-timeline>
                         <!-- <timeline>
                             <timeline-event ng-repeat="event in vm.events" side="left">
                                 <timeline-badge class="{{event.badgeClass}}">
@@ -146,7 +148,7 @@
 
         <!-- Angular -->
         <script src="vendor/angular/angular.min.js"></script>
-        <script src="vendor/angular-timeline/angular-timeline.js"></script>
+        <!-- <script src="vendor/angular-timeline/angular-timeline.js"></script> -->
         <script src="vendor/highcharts-ng/highcharts-ng.min.js"></script>
         <script src="vendor/angular-spinkit/angular-spinkit.min.js"></script>
         <script src="vendor/angular-translate/angular-translate.min.js"></script>
