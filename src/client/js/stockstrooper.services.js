@@ -24,9 +24,7 @@
         function getEvents(index, dateStart, dateEnd) {
             var deffered = $q.defer();
 
-            // TODO Integrate dateStart and dateEnd
-
-            $http.get(REST + '/events/' + index)
+            $http.get(REST + '/events/' + index + '/' + dateStart + '/' + dateEnd)
                 .success(function(res) {
                     deffered.resolve(res);
                 })

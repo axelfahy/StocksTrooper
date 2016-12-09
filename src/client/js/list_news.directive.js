@@ -31,12 +31,17 @@
             vm.response = '';
             vm.loading = false;
             vm.data = $scope.data;
-            vm.currentNews = vm.data[0];
-            vm.currentNews.index = 0;
+            if (angular.equals({}, vm.data)) {
+                vm.nodata = true;
+            } else {
+                vm.currentNews = vm.data[0];
+                vm.currentNews.index = 0;
+            }
         }
 
-        function selectNews(news) {
+        function selectNews(news, index) {
             vm.currentNews = news;
+            vm.currentNews.index = index;
         }
 
         init();

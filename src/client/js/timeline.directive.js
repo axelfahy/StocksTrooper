@@ -20,13 +20,20 @@
         return directive;
     }
 
-    timelineController.$inject = ['$scope'];
-    function timelineController($scope) {
+    timelineController.$inject = ['$scope', '$rootScope'];
+    function timelineController($scope, $rootScope) {
         var vm = this;
 
         vm.init = init;
+        vm.chooseEvent = chooseEvent;
 
         function init() {
+            console.log($scope.data);
+            vm.events = $scope.data;
+        }
+
+        function chooseEvent(currentEvent) {
+            $rootScope.$broadcast('news.load', currentEvent.date);
         }
 
         init();

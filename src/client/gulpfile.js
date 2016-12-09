@@ -53,7 +53,7 @@ gulp.task('minify-timeline-css', function() {
 gulp.task('minify-js-app', function() {
     return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/timeline.directive.js', 'js/list_news.directive.js', '!js/*.min.js', 'js/translate.config.js'])
         .pipe(concat('app.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('js'))
@@ -65,7 +65,7 @@ gulp.task('minify-js-app', function() {
 gulp.task('minify-js-st', function() {
     return gulp.src(['js/stockstrooper.module.js', 'js/stockstrooper.*.js', '!js/*.min.js'])
         .pipe(concat('stockstrooper.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('js'))
