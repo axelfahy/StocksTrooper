@@ -1,0 +1,9 @@
+<ul class="timeline">
+	<li ng-repeat="event in vm.events" ng-click="vm.chooseEvent(event)">
+		<div ng-class="{'direction-l': event.trend == -1, 'direction-l-g': event.trend == 1}">
+			<div class="flag-wrapper">
+				<span class="flag">{{event.date+'T00:00:00' | date:'d MMMM yyyy'}}</span>
+			</div>
+		</div>
+	</li>
+</ul>

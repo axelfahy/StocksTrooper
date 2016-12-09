@@ -39,11 +39,21 @@ gulp.task('minify-css', ['less'], function() {
         }));
 });
 
+gulp.task('minify-timeline-css', function() {
+    return gulp.src('css/timeline.css')
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
+});
+
 // Minify JS
 gulp.task('minify-js-app', function() {
-    return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/list_news.directive.js', '!js/*.min.js', 'js/translate.config.js'])
+    return gulp.src(['js/app.module.js', 'js/app.*.js', 'js/timeline.directive.js', 'js/list_news.directive.js', '!js/*.min.js', 'js/translate.config.js'])
         .pipe(concat('app.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('js'))
@@ -55,7 +65,7 @@ gulp.task('minify-js-app', function() {
 gulp.task('minify-js-st', function() {
     return gulp.src(['js/stockstrooper.module.js', 'js/stockstrooper.*.js', '!js/*.min.js'])
         .pipe(concat('stockstrooper.js'))
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('js'))
@@ -78,8 +88,8 @@ gulp.task('copy', function() {
     gulp.src(['node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js', 'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'])
         .pipe(gulp.dest('vendor/angular-ui-bootstrap'));
 
-    gulp.src(['node_modules/angular-timeline/dist/angular-timeline.js','node_modules/angular-timeline/dist/angular-timeline.css'])
-        .pipe(gulp.dest('vendor/angular-timeline'));
+    // gulp.src(['node_modules/angular-timeline/dist/angular-timeline.js','node_modules/angular-timeline/dist/angular-timeline.css'])
+    //     .pipe(gulp.dest('vendor/angular-timeline'));
 
     gulp.src(['node_modules/highcharts-ng/dist/highcharts-ng.min.js', 'node_modules/highcharts-ng/dist/lazyload.min.js'])
         .pipe(gulp.dest('vendor/highcharts-ng'));
@@ -102,7 +112,7 @@ gulp.task('copy', function() {
 });
 
 // Run everything
-gulp.task('default', ['less', 'minify-css', 'minify-js-app', 'minify-js-st', 'copy']);
+gulp.task('default', ['less', 'minify-timeline-css', 'minify-css', 'minify-js-app', 'minify-js-st', 'copy']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
@@ -114,9 +124,9 @@ gulp.task('browserSync', function() {
 });
 
 // Dev task with browserSync
-gulp.task('dev', ['browserSync', 'less', 'minify-css', 'minify-js-app', 'minify-js-st'], function() {
+gulp.task('dev', ['browserSync', 'less', 'minify-timeline-css', 'minify-css', 'minify-js-app', 'minify-js-st'], function() {
     gulp.watch('less/*.less', ['less']);
-    gulp.watch('css/*.css', ['minify-css']);
+    gulp.watch('css/*.css', ['minify-css', 'minify-timeline-css']);
     gulp.watch('js/*.js', ['minify-js-app', 'minify-js-st']);
     // Reloads the browser whenever HTML or JS files change
     gulp.watch('*.html', browserSync.reload);

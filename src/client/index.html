@@ -12,18 +12,17 @@
         <!-- Bootstrap Core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
         <!-- Custom Fonts -->
         <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
         <!-- Angular Timeline -->
-        <link href="vendor/angular-timeline/angular-timeline.css" rel="stylesheet">
         <link href="vendor/angular-spinkit/angular-spinkit.min.css" rel="stylesheet">
 
         <!-- Theme CSS -->
         <link href="css/freelancer.min.css" rel="stylesheet">
+        <link href="css/timeline.min.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,11 +30,12 @@
 
     </head>
 
-    <body id="page-top" class="index" ng-controller="AppController as vm">
+    <body id="page-top" class="index" ng-controller="AppController as vm" ng-cloak>
 
-        <!-- Navigation -->
+        <!-- NAVIGATION -->
         <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix">
             <div class="container-fluid">
+
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header page-scroll">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -44,8 +44,12 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <a class="navbar-brand" href="#page-top">Stocks Trooper</a>
-                    <a class="pull-right" href="#" ng-click="vm.changeLanguage('en')" ng-if="vm.lang == 'st'"><img src="img/huwhite.png" class="img-lang"></img></a>
-                    <a class="pull-right" href="#" ng-click="vm.changeLanguage('st')" ng-if="vm.lang == 'en'"><img src="img/stwhite.png" class="img-lang"></img></a>
+                    <a class="pull-right" href="#" ng-click="vm.changeLanguage('en')" ng-if="vm.lang == 'st'">
+                        <img src="img/huwhite.png" class="img-lang"></img>
+                    </a>
+                    <a class="pull-right" href="#" ng-click="vm.changeLanguage('st')" ng-if="vm.lang == 'en'">
+                        <img src="img/stwhite.png" class="img-lang"></img>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -61,68 +65,63 @@
                         <h3 class="pull-right m-top-md">{{'PICKER.LABEL' | translate}}</h3>
                     </div>
                     <div class="col-md-8">
-                        <form class="form-inline" name="sentMessage" id="contactForm" novalidate>
+                        <form class="form-inline" name="formPicker" id="contactForm" novalidate>
                             <!-- <div class="row control-group"> -->
-                                <div class="form-group col-xs-8 floating-label-form-group controls">
-                                    <label>Index</label>
-                                    <input type="text" class="form-control" placeholder="Index" id="name" required data-validation-required-message="Please enter your name." ng-model="vm.index">
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="form-group col-xs-4 m-top-xs">
-                                    <button type="submit" class="btn btn-success btn-lg" ng-click="vm.getStocks(vm.index)">{{'PICKER.BTN_INDEX' | translate}}</button>
-                                </div>
+                            <div class="form-group col-xs-8 floating-label-form-group controls">
+                                <label>Index</label>
+                                <input type="text" class="form-control" placeholder="Index" id="name" required data-validation-required-message="Please enter your name." ng-model="vm.picker.index">
+                                <p class="text-danger">{{vm.picker.message}}</p>
+                            </div>
+                            <div class="form-group col-xs-4 m-top-xs">
+                                <button type="submit" class="btn btn-success btn-lg" ng-click="vm.getStocks(vm.picker.index)">{{'PICKER.BTN_INDEX' | translate}}</button>
+                            </div>
                         </form>
                     </div>
                 </div>
 
-                <!-- Loading -->
-                <!-- <div ng-show="true"> -->
+                <!-- LOADING -->
                 <div ng-show="vm.loading && !vm.welcome">
                     <cube-grid-spinner></cube-grid-spinner>
                 </div>
 
+                <!-- WELCOME IMAGE -->
                 <div ng-show="vm.welcome">
                     <img src="img/st_bubble.png" class="img-centered welcome"></img>
                 </div>
 
-                <!-- Main content -->
-                <!-- <div class="row" ng-show="false"> -->
+                <!-- MAIN -->
                 <div class="row" ng-show="!vm.loading">
-                    <div class="col-md-9">
+                    <div class="col-md-10">
+
+                        <!-- DATA -->
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>{{'CHART.TITLE' | translate:{index: vm.index} | uppercase}}</h4>
+                                <h4>{{'CHART.TITLE' | translate:{index: vm.currentIndex} | uppercase}}</h4>
                                 <highchart id="chart1" config="chartConfig"></highchart>
                             </div>
                         </div>
+
+                        <!-- EVENTS -->
                         <div class="row">
-                            <div class="col-md-12">
-                                <h4>{{'NEWS.TITLE' | translate}}</h4>
+                            <div class="col-md-12" ng-if="vm.news">
+                                <h4>{{'NEWS.TITLE' | translate}} {{vm.currentEvent+'T00:00:00' | date:'d MMMM yyyy'}}</h4>
                                 <list-news data="vm.news"></list-news>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <h4>TODO: IMPORTANT BATTLES</h4>
-                        <!-- <timeline>
-                            <timeline-event ng-repeat="event in vm.events" side="left">
-                                <timeline-badge class="{{event.badgeClass}}">
-                                    <i class="glyphicon {{event.badgeIconClass}}"></i>
-                                </timeline-badge>
-                                <timeline-panel class="{{event.badgeClass}}">
-                                    <timeline-heading>
-                                        <h4>{{event.title}}</h4>
-                                    </timeline-heading>
-                                    <p>{{event.content}}</p>
-                                </timeline-panel>
-                            </timeline-event>
-                        </timeline> -->
+
+                    <!-- TIMELINE -->
+                    <div class="col-md-2" ng-if="vm.events">
+                        <h4>{{'EVENTS.TITLE' | translate }}</h4>
+                        <st-timeline data="vm.events"></st-timeline>
                     </div>
+                    <!-- TODO LOADING TIMELINE -->
+
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
+        <!-- FOOTER -->
         <footer class="text-center">
             <div class="footer-below">
                 <div class="container">
@@ -146,7 +145,6 @@
 
         <!-- Angular -->
         <script src="vendor/angular/angular.min.js"></script>
-        <script src="vendor/angular-timeline/angular-timeline.js"></script>
         <script src="vendor/highcharts-ng/highcharts-ng.min.js"></script>
         <script src="vendor/angular-spinkit/angular-spinkit.min.js"></script>
         <script src="vendor/angular-translate/angular-translate.min.js"></script>
