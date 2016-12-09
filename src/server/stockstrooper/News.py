@@ -55,6 +55,17 @@ class News:
                 docs[index]['date'] = docs[index].pop('pub_date')
                 docs[index]['url'] = docs[index].pop('web_url')
 
+            # If we have less than 3 news, creates fake ones.
+            while len(docs) < 3:
+                news = {
+                    'url': 'https://www.nytimes.com/reuters/{}/{}/{}/huge-changes-{}.html'.format(
+                        date_start.year, date_start.month, date_start.day, stock.get_name()),
+                    'headline': 'Huge changes in {}'.format(stock.get_name()),
+                    'date': date_start.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                    'source': 'Reuters'
+                }
+                docs.append(news)
+
             return docs
         except:
             return dict()
