@@ -21,7 +21,7 @@ class News:
     def __init__(self, api_key):
         self.api_key = api_key
         self.NY_TIMES_API = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?'
-        self.FIELDS = ['headline', 'description', 'pub_date', 'source', 'web_url']
+        self.FIELDS = ['headline', 'snippet', 'pub_date', 'source', 'web_url']
 
     def get_news(self, index, date):
         """Get a list of news from the event date
@@ -52,6 +52,7 @@ class News:
                 docs[index] = {k: v for k, v in news.items() if k in self.FIELDS}
                 # Rename fields
                 docs[index]['headline'] = docs[index]['headline']['main']
+                docs[index]['description'] = docs[index].pop('snippet')
                 docs[index]['date'] = docs[index].pop('pub_date')
                 docs[index]['url'] = docs[index].pop('web_url')
 
@@ -61,6 +62,7 @@ class News:
                     'url': 'https://www.nytimes.com/reuters/{}/{}/{}/huge-changes-{}.html'.format(
                         date_start.year, date_start.month, date_start.day, stock.get_name()),
                     'headline': 'Huge changes in {}'.format(stock.get_name()),
+                    'description': 'Huge changes in {}! The recent modification of the foreign policy of the company causes its market value to change significantly. In fact, the {} index was affected by the recent choices made by the company... '.format(stock.get_name(), stock.index),
                     'date': date_start.strftime('%Y-%m-%dT%H:%M:%SZ'),
                     'source': 'Reuters'
                 }
