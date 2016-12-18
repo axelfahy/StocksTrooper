@@ -546,3 +546,18 @@ fieldset[disabled] .btn-success.active {
 .right {
   text-align: right;
 }
+.info {
+  color: #FF851B;
+}
+.list-group-item.active {
+  background-color: #2C3E50;
+  border-color: #2C3E50;
+}
+.list-group-item.active:hover {
+  background-color: #2C3E50;
+  border-color: #2C3E50;
+}
+.list-group-item.active:focus {
+  background-color: #2C3E50;
+  border-color: #2C3E50;
+}

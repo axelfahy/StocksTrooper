@@ -1,16 +1,16 @@
-<div class="row" ng-if="!vm.nodata">
+<div class="row" ng-if="!vm.nodata" ng-hide="vm.loading">
     <div class="col-sm-4">
         <div class="list-group" style="max-height: 30vh; overflow-y: scroll">
-            <a href="#" ng-repeat="news in vm.data" class="list-group-item" ng-class="{'active': $index == vm.currentNews.index}" ng-click="vm.selectNews(news, $index)">
+            <a href="" ng-repeat="news in vm.data" class="list-group-item" ng-class="{'active': $index == vm.currentNews.index}" ng-click="vm.selectNews(news, $index)">
                 <h5 class="list-group-item-heading">{{news.headline}}</h5>
                 <small class="list-group-item-text">{{news.date | date: dd/mm/yy}} - {{news.source | uppercase}}</small>
             </a>
         </div>
     </div>
     <div class="col-sm-8">
-        <h4>{{vm.currentNews.headline}}</h4>
-        <span>{{vm.currentNews.description}}</span>
-        <a ng-href="{{vm.currentNews.url}}" class="pull-right">{{vm.currentNews.source}}</a>
+        <h4><a ng-href="{{vm.currentNews.url}}">{{vm.currentNews.headline}}</a></h4>
+        <p class="small">{{vm.currentNews.description}}</p>
+        <p class="small"><i class="m-top-xs">Source: <a ng-href="{{vm.currentNews.url}}">{{vm.currentNews.source}}</a></i></p>
     </div>
 </div>
 
@@ -18,4 +18,8 @@
     <div class="col-sm-4 col-sm-offset-2">
         <h4>No news related to this event found.</h4>
     </div>
+</div>
+
+<div ng-show="vm.loading">
+    <cube-grid-spinner></cube-grid-spinner>
 </div>

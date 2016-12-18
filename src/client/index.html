@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content="Stocks Trooper brings news on the most important variation of a stock index.">
+        <meta name="author" content="Rudolf Hohn and Axel Fahy">
 
         <title>Stocks Trooper</title>
 
@@ -35,41 +35,37 @@
         <!-- NAVIGATION -->
         <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix">
             <div class="container-fluid">
-
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        Menu
-                        <i class="fa fa-bars"></i>
-                    </button>
+
+                    <!-- TITLE -->
                     <a class="navbar-brand" href="#page-top">Stocks Trooper</a>
+
+                    <!-- LANGUAGE -->
                     <a class="pull-right" href="#" ng-click="vm.changeLanguage('en')" ng-if="vm.lang == 'st'">
                         <img src="img/huwhite.png" class="img-lang"></img>
                     </a>
                     <a class="pull-right" href="#" ng-click="vm.changeLanguage('st')" ng-if="vm.lang == 'en'">
                         <img src="img/stwhite.png" class="img-lang"></img>
                     </a>
+
                 </div>
             </div>
         </nav>
 
+        <!-- MAIN CONTENT -->
         <section>
-
-            <!-- Main content -->
             <div class="container-fluid">
 
-                <!-- Index picker -->
+                <!-- INDEX PICKER -->
                 <div class="row picker">
                     <div class="col-md-3">
                         <h3 class="pull-right m-top-md">{{'PICKER.LABEL' | translate}}</h3>
                     </div>
                     <div class="col-md-8">
                         <form class="form-inline" name="formPicker" id="contactForm" novalidate>
-                            <!-- <div class="row control-group"> -->
                             <div class="form-group col-xs-8 floating-label-form-group controls">
                                 <label>Index</label>
-                                <input type="text" class="form-control" placeholder="Index" id="name" required data-validation-required-message="Please enter your name." ng-model="vm.picker.index">
+                                <input type="text" class="form-control" placeholder="Index" id="name" required data-validation-required-message="Please enter an index." ng-model="vm.picker.index" autofocus>
                                 <p class="text-danger">{{vm.picker.message}}</p>
                             </div>
                             <div class="form-group col-xs-4 m-top-xs">
@@ -90,32 +86,31 @@
                 </div>
 
                 <!-- MAIN -->
-                <div class="row" ng-show="!vm.loading">
+                <div class="row" ng-show="!vm.loading && !vm.welcome">
                     <div class="col-md-10">
 
                         <!-- DATA -->
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>{{'CHART.TITLE' | translate:{index: vm.currentIndex} | uppercase}}</h4>
+                                <h4>{{'CHART.TITLE' | translate | uppercase}} <span class="info">{{vm.currentIndex}}</span></h4>
                                 <highchart id="chart1" config="chartConfig"></highchart>
                             </div>
                         </div>
 
-                        <!-- EVENTS -->
+                        <!-- NEWS -->
                         <div class="row">
                             <div class="col-md-12" ng-if="vm.news">
-                                <h4>{{'NEWS.TITLE' | translate}} {{vm.currentEvent+'T00:00:00' | date:'d MMMM yyyy'}}</h4>
-                                <list-news data="vm.news"></list-news>
+                                <h4>{{'NEWS.TITLE' | translate}} <span class="info">{{vm.news.currentEvent+'T00:00:00' | date:'d MMMM yyyy'}}<span></h4>
+                                <list-news date="vm.news.currentEvent" index="vm.currentIndex"></list-news>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TIMELINE -->
+                    <!-- EVENTS -->
                     <div class="col-md-2" ng-if="vm.events">
                         <h4>{{'EVENTS.TITLE' | translate }}</h4>
-                        <st-timeline data="vm.events"></st-timeline>
+                        <st-timeline index="vm.events.index" date-start="vm.events.dateStart" date-end="vm.events.dateEnd"></st-timeline>
                     </div>
-                    <!-- TODO LOADING TIMELINE -->
 
                 </div>
             </div>

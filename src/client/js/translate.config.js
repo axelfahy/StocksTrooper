@@ -17,14 +17,15 @@
 
     var translationsEN = {
         PICKER: {
-            BTN_INDEX: 'LOAD THE DATA',
+            BTN_INDEX: 'LOAD DATA',
             LABEL: 'INDEX PICKER'
         },
         CHART: {
-            TITLE: '{{index}} INDEX HISTORY'
+            TITLE: 'INDEX HISTORY'
+            // TITLE: '{{index}} INDEX HISTORY'
         },
         NEWS: {
-            TITLE: 'NEWS RELEVANT TO THE EVENT'
+            TITLE: 'NEWS RELEVANT ON '
         },
         EVENTS: {
             TITLE: 'EVENTS'
@@ -37,7 +38,8 @@
             LABEL: 'PLANET PICKER'
         },
         CHART: {
-            TITLE: 'HISTORY OF THE PLANET {{index}}'
+            TITLE: 'HISTORY OF THE PLANET'
+            // TITLE: 'HISTORY OF THE PLANET {{index}}'
         },
         NEWS: {
             TITLE: 'SECRET FILES OF BATTLE'

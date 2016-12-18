@@ -1,4 +1,4 @@
-<ul class="timeline">
+<ul class="timeline" ng-hide="vm.loading">
 	<li ng-repeat="event in vm.events" ng-click="vm.chooseEvent(event)">
 		<div ng-class="{'direction-l': event.trend == -1, 'direction-l-g': event.trend == 1}">
 			<div class="flag-wrapper">
@@ -7,3 +7,7 @@
 		</div>
 	</li>
 </ul>
+
+<div ng-show="vm.loading">
+    <cube-grid-spinner></cube-grid-spinner>
+</div>
