@@ -34,8 +34,11 @@
             getEvents($scope.index, $scope.dateStart, $scope.dateEnd);
         }
 
-        function chooseEvent(currentEvent) {
-            vm.currentEvent = currentEvent.date;
+        function chooseEvent(currentEvent, i) {
+            vm.currentEvent = {
+                date: currentEvent.date,
+                i: i
+            };
             $rootScope.$broadcast('news.load', currentEvent.date);
         }
 
@@ -45,9 +48,11 @@
                 STServices.getEvents(index, dateStart, dateEnd)
                     .then(function(res) {
                         vm.events = res;
-                        chooseEvent(vm.events[0]);
+                        chooseEvent(vm.events[0], 0);
                         endLoading();
                     });
+            } else {
+                endLoading();
             }
         }
 
@@ -59,8 +64,9 @@
             vm.loading = false;
         }
 
-        $scope.$watch(['index', 'dateStart', 'dataEnd'], function(newValue, oldValue) {
-            getEvents($scope.index, $scope.dateStart, $scope.dataEnd);
+        $scope.$on('timeline.events', function(event) {
+            $scope.$apply();
+            getEvents($scope.index, $scope.dateStart, $scope.dateEnd);
         });
 
         init();

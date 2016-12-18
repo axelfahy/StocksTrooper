@@ -21,8 +21,8 @@
         return directive;
     }
 
-    listNewsController.$inject = ['$scope', 'STServices'];
-    function listNewsController($scope, STServices) {
+    listNewsController.$inject = ['$scope', 'STServices', '$rootScope'];
+    function listNewsController($scope, STServices, $rootScope) {
         var vm = this;
 
         vm.selectNews = selectNews;
@@ -33,7 +33,6 @@
             vm.loading = true;
             vm.date = $scope.date;
             vm.index = $scope.index;
-            console.log($scope.date);
 
             getNews($scope.index, $scope.date);
         }
@@ -49,6 +48,7 @@
                         vm.currentNews = vm.data[0];
                         vm.currentNews.index = 0;
                     }
+                    updateNewsFlag(vm.currentNews.date);
                     endLoading();
                 });
         }
@@ -56,6 +56,10 @@
         function selectNews(news, index) {
             vm.currentNews = news;
             vm.currentNews.index = index;
+        }
+
+        function updateNewsFlag(date) {
+            $rootScope.$broadcast('app.flags.news', date);
         }
 
         function beginLoading() {
@@ -71,6 +75,9 @@
             getNews($scope.index, date);
         });
 
+        $scope.$on('timeline.events', function(event) {
+            beginLoading();
+        })
 
         init();
     }

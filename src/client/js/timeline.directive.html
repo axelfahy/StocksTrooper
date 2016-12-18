@@ -1,8 +1,8 @@
 <ul class="timeline" ng-hide="vm.loading">
-	<li ng-repeat="event in vm.events" ng-click="vm.chooseEvent(event)">
+	<li ng-repeat="event in vm.events" ng-click="vm.chooseEvent(event, $index)">
 		<div ng-class="{'direction-l': event.trend == -1, 'direction-l-g': event.trend == 1}">
 			<div class="flag-wrapper">
-				<span class="flag">{{event.date+'T00:00:00' | date:'d MMMM yyyy'}}</span>
+				<span class="flag" ng-class="{'active': $index == vm.currentEvent.i}">{{event.date+'T00:00:00' | date:'d MMMM yyyy'}}</span>
 			</div>
 		</div>
 	</li>

@@ -78,12 +78,17 @@
 .flag {
     position: relative;
     display: inline;
-    background: rgb(248, 248, 248);
+    background: #fff;
     padding: 6px 10px;
     border-radius: 5px;
     font-weight: 600;
     text-align: left;
     width: 50px;
+}
+
+.active {
+    background: #2C3E50;
+    color: #fff;
 }
 
 .direction-l .flag {
