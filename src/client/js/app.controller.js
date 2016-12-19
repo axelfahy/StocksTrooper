@@ -96,8 +96,10 @@
                         color: Highcharts.getOptions().colors[3]
                     });
 
-                    addSeriesOfFlags('fb');
-                    vm.loadEvents(index, '20151209', '20161212');
+                    if (index === 'fb') {
+                        addSeriesOfFlags('fb');
+                    }
+                    vm.loadEvents(index, '20151216', '20161216');
 
                 });
         }
@@ -129,7 +131,7 @@
                 data: [{
                     x: Date.UTC(2016, 11 - 1, 2),
                     title: 'N',
-                    text: 'Shape: "squarepin"'
+                    text: 'News'
                 }],
                 shape: 'circlepin',
                 width: 16

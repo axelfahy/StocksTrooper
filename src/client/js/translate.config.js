@@ -22,10 +22,9 @@
         },
         CHART: {
             TITLE: 'INDEX HISTORY'
-            // TITLE: '{{index}} INDEX HISTORY'
         },
         NEWS: {
-            TITLE: 'NEWS RELEVANT ON '
+            TITLE: 'NEWS'
         },
         EVENTS: {
             TITLE: 'EVENTS'
@@ -39,13 +38,12 @@
         },
         CHART: {
             TITLE: 'HISTORY OF THE PLANET'
-            // TITLE: 'HISTORY OF THE PLANET {{index}}'
         },
         NEWS: {
-            TITLE: 'SECRET FILES OF BATTLE'
+            TITLE: 'SECRET FILES'
         },
         EVENTS: {
-            TITLE: 'IMPORTANT BATTLES'
+            TITLE: 'BATTLES'
         }
     };
 

@@ -108,7 +108,7 @@
 
                     <!-- EVENTS -->
                     <div class="col-md-2" ng-if="vm.events">
-                        <h4>{{'EVENTS.TITLE' | translate }}</h4>
+                        <h4>{{'EVENTS.TITLE' | translate }} <span class="info">{{vm.events.dateStart+'T00:00:00' | date:'d.M.yy'}} - {{vm.events.dateEnd+'T00:00:00' | date:'d.M.yy'}}<span></h4>
                         <st-timeline index="vm.events.index" date-start="vm.events.dateStart" date-end="vm.events.dateEnd"></st-timeline>
                     </div>
 
