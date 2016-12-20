@@ -5,7 +5,14 @@ In this chapter, we describe precisely the IT related specifications (e.g. REST 
 %-------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------
 \section{System architecture}
-TODO graphical representation of the system
+The figure~\ref{fig:specs:architecture} defines the system architecture. The server will be written in Python using the Flask library. The client will be written in Javascript using the framework AngularJS and the library HighstocksJS, a sub-library of HighchartsJS. The source of our data is the \textit{New York Times API} and \textit{Yahoo Finance}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{Figures/st-system-architecture.png}
+    \caption{System architecture}
+    \label{fig:specs:architecture}
+\end{figure}
 
 %-------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------
@@ -14,9 +21,9 @@ The figure~\ref{fig:specs:flowdiagram} defines precisely how the user interacts 
 
 \begin{figure}[H]
     \centering
-\includegraphics[scale=0.5]{Figures/workflow-stockstrooper.png}
-\caption{Flow diagram of the user interaction}
-\label{fig:specs:flowdiagram}
+    \includegraphics[scale=0.5]{Figures/st-workflow-app.png}
+    \caption{Flow diagram of the user interaction}
+    \label{fig:specs:flowdiagram}
 \end{figure}
 
 %-------------------------------------------------------------------------------
@@ -121,9 +128,3 @@ Afterwards, we take all the data and process them by samples of a specific size 
 Depending of the stock we are processing, we may have more or less events that we wanted. If we have found more events, we take the highest events and keep them. Events will be sorted by highest difference between max and min value in order to know which ones are the most important. However, if we have less events, the threshold is decrease by $0.05$ and we process all the samples all over again until we have enough events.
 
 This technique is not bulletproof. By processing the values sample by sample, we could miss some events.
-
-
-
-
-
-
