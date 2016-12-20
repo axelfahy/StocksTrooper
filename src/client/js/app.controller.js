@@ -28,6 +28,7 @@
                 index: '',
                 valid: undefined
             };
+            vm.errindex = false;
         }
 
         function clean() {
@@ -40,11 +41,12 @@
         ///////////////////////////////////////////////////////////////////////
 
         function getStocks(index) {
-            clean();
             vm.welcome = false;
             vm.loading = true;
+            vm.errindex = false;
             STServices.getStocks(index)
                 .then(function(res) {
+                    clean();
                     vm.currentIndex = index;
                     vm.loading = false;
 
@@ -99,8 +101,15 @@
                     if (index === 'fb') {
                         addSeriesOfFlags('fb');
                     }
-                    vm.loadEvents(index, '20151216', '20161216');
+                    vm.loadEvents(index, '20151223', '20161223');
 
+                })
+                .catch(function(err) {
+                    if (vm.currentIndex === undefined) {
+                        vm.welcome = true;
+                    }
+                    vm.errindex = true;
+                    vm.loading = false;
                 });
         }
 

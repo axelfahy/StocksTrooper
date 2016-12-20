@@ -531,6 +531,9 @@ fieldset[disabled] .btn-success.active {
 .m-top-xs {
   margin-top: 13px;
 }
+.m-top-sm {
+  margin-top: 19px;
+}
 .m-top-md {
   margin-top: 26px;
 }
@@ -548,6 +551,9 @@ fieldset[disabled] .btn-success.active {
 }
 .info {
   color: #FF851B;
+}
+.danger {
+  color: #FF4136;
 }
 .list-group-item.active {
   background-color: #2C3E50;
