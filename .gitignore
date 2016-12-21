@@ -97,6 +97,8 @@ ENV/
 *.pdf
 *.synctex.gz
 *.toc
+*.nav
+*.snm
 
 # Vim temporary files
 *.swp
